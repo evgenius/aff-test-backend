@@ -1,3 +1,5 @@
+package de.affinitas.match_filter;
+
 import de.affinitas.match_filter.http.HttpService;
 import spark.Spark;
 
