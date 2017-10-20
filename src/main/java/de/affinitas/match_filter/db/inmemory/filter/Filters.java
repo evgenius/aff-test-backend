@@ -1,6 +1,7 @@
 package de.affinitas.match_filter.db.inmemory.filter;
 
 import de.affinitas.match_filter.db.Filter;
+import de.affinitas.match_filter.exception.ParserException;
 
 import java.util.Arrays;
 
@@ -59,9 +60,15 @@ public enum Filters {
 
     abstract Filter createInstance(String[] params);
 
-    public static Filter create(String[] params) {
+    public static Filter create(String[] params) throws ParserException {
         String filterType = params[0].toUpperCase();
         String[] restParams = Arrays.copyOfRange(params, 1, params.length);
-        return Filters.valueOf(filterType).createInstance(restParams);
+        try {
+            return Filters.valueOf(filterType).createInstance(restParams);
+        } catch (IllegalArgumentException ex) {
+            throw new ParserException("Unknown filter type: " + filterType);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            throw new ParserException("Invalid filter parameters number");
+        }
     }
 }

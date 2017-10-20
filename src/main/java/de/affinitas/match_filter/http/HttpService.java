@@ -7,6 +7,7 @@ import de.affinitas.match_filter.db.Database;
 import de.affinitas.match_filter.db.Filter;
 import de.affinitas.match_filter.db.Query;
 import de.affinitas.match_filter.db.inmemory.filter.Filters;
+import de.affinitas.match_filter.exception.ParserException;
 import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
@@ -26,9 +27,12 @@ public class HttpService {
 
     public void setupRoutes() {
         Spark.get("/api/match", this::getMatch);
+
+        Spark.exception(Exception.class, (ex, req, res) ->
+                res.body(gson.toJson(new JsonErrorResponse(ex.getMessage()))));
     }
 
-    private String getMatch(Request req, Response res) {
+    private String getMatch(Request req, Response res) throws ParserException {
         Query query = db.createQuery();
         QueryParamsMap filterMap = req.queryMap("filter");
         if (filterMap != null && filterMap.hasValue()) {
@@ -45,7 +49,7 @@ public class HttpService {
         return gson.toJson(new JsonDataResponse(query.execute()));
     }
 
-    private static Filter parseFilter(String val) {
+    private static Filter parseFilter(String val) throws ParserException {
         String[] values = val.split(":");
         return Filters.create(values);
     }
