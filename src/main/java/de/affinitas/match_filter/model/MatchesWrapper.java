@@ -1,6 +1,6 @@
 package de.affinitas.match_filter.model;
 
-public class MatchWrapper {
+public class MatchesWrapper {
 
     private Matches matches;
 
