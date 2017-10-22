@@ -14,6 +14,7 @@ public class HeightFilter implements Filter {
 
     @Override
     public boolean test(Match match) {
-        return match.getHeightInCm() >= minHeight && match.getHeightInCm() <= maxHeight;
+        int height = match.getHeightInCm();
+        return height >= minHeight && (maxHeight == -1 || height <= maxHeight);
     }
 }
