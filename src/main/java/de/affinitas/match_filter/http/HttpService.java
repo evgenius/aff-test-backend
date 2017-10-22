@@ -28,8 +28,14 @@ public class HttpService {
     public void setupRoutes() {
         Spark.get("/api/match", this::getMatch);
 
-        Spark.exception(Exception.class, (ex, req, res) ->
-                res.body(gson.toJson(new JsonErrorResponse(ex.getMessage()))));
+        Spark.after("*", (req, res) -> {
+            addResponseHeaders(res);
+        });
+
+        Spark.exception(Exception.class, (ex, req, res) -> {
+            addResponseHeaders(res);
+            res.body(gson.toJson(new JsonErrorResponse(ex.getMessage())));
+        });
     }
 
     private String getMatch(Request req, Response res) throws ParserException {
@@ -44,9 +50,12 @@ public class HttpService {
                 }
             }
         }
+        return gson.toJson(new JsonDataResponse(query.execute()));
+    }
+
+    private void addResponseHeaders(Response res) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Content-Type", "application/json");
-        return gson.toJson(new JsonDataResponse(query.execute()));
     }
 
     private static Filter parseFilter(String val) throws ParserException {
