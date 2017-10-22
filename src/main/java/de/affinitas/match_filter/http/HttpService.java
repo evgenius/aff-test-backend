@@ -26,6 +26,7 @@ public class HttpService {
     }
 
     public void setupRoutes() {
+        Spark.get("/status", (req, res) -> "{\"status\": \"ok\"}");
         Spark.get("/api/match", this::getMatch);
 
         Spark.after("*", (req, res) -> {
