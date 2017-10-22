@@ -27,16 +27,16 @@ public enum Filters {
     COMPATIBILITY {
         @Override
         Filter createInstance(String[] params) {
-            int minScore = Integer.valueOf(params[0]);
-            int maxScore = Integer.valueOf(params[1]);
+            float minScore = Float.parseFloat(params[0]);
+            float maxScore = Float.parseFloat(params[1]);
             return new CompatibilityScoreFilter(minScore, maxScore);
         }
     },
     AGE {
         @Override
         Filter createInstance(String[] params) {
-            int minAge = Integer.valueOf(params[0]);
-            int maxAge = Integer.valueOf(params[1]);
+            int minAge = Integer.parseInt(params[0]);
+            int maxAge = Integer.parseInt(params[1]);
             return new AgeFilter(minAge, maxAge);
         }
     },

@@ -16,7 +16,8 @@ public class AgeFilter implements Filter {
 
     @Override
     public boolean test(Match match) {
-        return match.getAge() >= minAge && match.getAge() <= maxAge;
+        int age = match.getAge();
+        return age >= minAge && (maxAge == -1 || age <= maxAge);
     }
 
     @Override
