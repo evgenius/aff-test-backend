@@ -13,6 +13,9 @@ run:
 test:
 	./gradlew test
 
+at:
+	./gradlew at
+
 clean:
 	./gradlew clean
 	rm -rf out
