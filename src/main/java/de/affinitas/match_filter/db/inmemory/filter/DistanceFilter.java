@@ -22,7 +22,8 @@ public class DistanceFilter implements Filter {
     @Override
     public boolean test(Match match) {
         City matchCity = match.getCity();
-        return distance >= Distance.getDistance(lat, lon, matchCity.getLat(), matchCity.getLon());
+        return distance == -1 ||
+                distance >= Distance.getDistance(lat, lon, matchCity.getLat(), matchCity.getLon());
     }
 
     @Override

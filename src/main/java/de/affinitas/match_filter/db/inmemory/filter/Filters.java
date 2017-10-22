@@ -51,8 +51,8 @@ public enum Filters {
     DISTANCE {
         @Override
         Filter createInstance(String[] params) {
-            int lat = Integer.valueOf(params[0]);
-            int lon = Integer.valueOf(params[1]);
+            float lat = Float.valueOf(params[0]);
+            float lon = Float.valueOf(params[1]);
             int distance = Integer.valueOf(params[2]);
             return new DistanceFilter(lat, lon, distance);
         }
