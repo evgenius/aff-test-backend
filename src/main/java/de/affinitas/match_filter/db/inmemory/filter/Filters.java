@@ -63,12 +63,20 @@ public enum Filters {
     public static Filter create(String[] params) throws ParserException {
         String filterType = params[0].toUpperCase();
         String[] restParams = Arrays.copyOfRange(params, 1, params.length);
+
+        Filters filter;
         try {
-            return Filters.valueOf(filterType).createInstance(restParams);
+            filter = Filters.valueOf(filterType);
         } catch (IllegalArgumentException ex) {
-            throw new ParserException("Unknown filter type: " + filterType);
+            throw new ParserException("Unknown filter type: " + params[0]);
+        }
+
+        try {
+            return filter.createInstance(restParams);
+        } catch (IllegalArgumentException ex) {
+            throw new ParserException(String.format("Invalid \"%s\" filter parameters", params[0]));
         } catch (ArrayIndexOutOfBoundsException ex) {
-            throw new ParserException("Invalid filter parameters number");
+            throw new ParserException(String.format("Invalid number of \"%s\" filter parameters", params[0]));
         }
     }
 }
