@@ -145,3 +145,44 @@ Feature:
     When I apply a "wrong" filter
     And I make a request
     Then I receive the error message "Unknown filter type: wrong"
+
+  Scenario: Apply several boolean filters
+    Given the service is running
+    When I apply a "photo" filter
+    And I apply a "contact" filter
+    And I apply a "favourite" filter
+    And I make a request
+    Then I receive 4 results
+
+  Scenario: Apply several wide-range filters
+    Given the service is running
+    When I apply a "compatibility" filter with range from 0 to 1
+    And I apply an "age" filter with range from 18 to -1
+    And I apply a "height" filter with range from 135 to -1
+    And I apply a "distance" filter with the distance -1 km from the location (51.509865,-0.118092)
+    And I make a request
+    Then I receive 25 results
+
+  Scenario: Apply all filters simultaneously
+    Given the service is running
+    When I apply a "photo" filter
+    And I apply a "contact" filter
+    And I apply a "favourite" filter
+    And I apply a "compatibility" filter with range from 0 to 1
+    And I apply an "age" filter with range from 18 to -1
+    And I apply a "height" filter with range from 135 to -1
+    And I apply a "distance" filter with the distance -1 km from the location (51.509865,-0.118092)
+    And I make a request
+    Then I receive 4 results
+
+  Scenario: Apply all filters simultaneously
+    Given the service is running
+    When I apply a "photo" filter
+    And I apply a "contact" filter
+    And I apply a "favourite" filter
+    And I apply a "compatibility" filter with range from 0.83 to 0.99
+    And I apply an "age" filter with range from 35 to 45
+    And I apply a "height" filter with range from 170 to 180
+    And I apply a "distance" filter with the distance 200 km from the location (51.509865,-0.118092)
+    And I make a request
+    Then I receive 1 result

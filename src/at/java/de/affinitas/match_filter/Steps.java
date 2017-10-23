@@ -75,7 +75,7 @@ public class Steps implements En {
         request.param("filter", value);
     }
 
-    @Then("^I receive (\\d+) results$")
+    @Then("^I receive (\\d+) result[s]?$")
     public void iReceiveResults(int number) throws Throwable {
         assertEquals(number, results.size());
     }
