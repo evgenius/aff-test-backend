@@ -2,6 +2,7 @@ package de.affinitas.match_filter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -26,6 +27,7 @@ public class Steps implements En {
 
     private HttpClient client = new HttpClient();
     private Request request;
+    private DataResponse dataResponse;
     private Matches results;
 
     @Before
@@ -64,12 +66,22 @@ public class Steps implements En {
     @When("^I make a request$")
     public void iMakeARequest() throws Throwable {
         ContentResponse response = request.send();
-        DataResponse dataResponse = gson.fromJson(response.getContentAsString(), DataResponse.class);
+        dataResponse = gson.fromJson(response.getContentAsString(), DataResponse.class);
         results = dataResponse.getData();
+    }
+
+    @When("^I set the filter parameter to \"([^\"]*)\"$")
+    public void iSetTheFilterParameterTo(String value) throws Throwable {
+        request.param("filter", value);
     }
 
     @Then("^I receive (\\d+) results$")
     public void iReceiveResults(int number) throws Throwable {
         assertEquals(number, results.size());
+    }
+
+    @Then("^I receive the error message \"(.*)\"$")
+    public void iReceiveTheErrorMessage(String message) throws Throwable {
+        assertEquals(message, dataResponse.getMessage());
     }
 }
