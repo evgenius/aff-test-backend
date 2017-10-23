@@ -76,19 +76,19 @@ Feature:
 
   Scenario: Apply a height filter
     Given the service is running
-    When I apply an "height" filter with range from 160 to 180
+    When I apply a "height" filter with range from 160 to 180
     And I make a request
     Then I receive 12 results
 
   Scenario: Apply a wider height filter
     Given the service is running
-    When I apply an "height" filter with range from 135 to 210
+    When I apply a "height" filter with range from 135 to 210
     And I make a request
     Then I receive 25 results
 
   Scenario: Apply an edge case height filter
     Given the service is running
-    When I apply an "height" filter with range from 135 to -1
+    When I apply a "height" filter with range from 135 to -1
     And I make a request
     Then I receive 25 results
 
