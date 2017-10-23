@@ -3,12 +3,12 @@
 
 # Usage
 
-## Run the service
+## Running the service
 - `make run`
 
-## Run the unit tests
+## Running unit tests
 - `make test`
 
-## Run the acceptance tests
+## Running acceptance tests
 - Make sure the service is running
 - `make at`
