@@ -5,6 +5,7 @@ JAR_PATH = build/libs/$(PROJECT_NAME)-$(PROJECT_VERSION)-all.jar
 usage:
 	@echo "Usage: make run  - run the service"
 	@echo "       make test - run the unit tests"
+	@echo "       make at   - run the acceptance tests"
 
 run:
 	./gradlew shadowJar
