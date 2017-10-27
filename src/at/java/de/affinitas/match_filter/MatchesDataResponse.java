@@ -2,7 +2,7 @@ package de.affinitas.match_filter;
 
 import de.affinitas.match_filter.model.Matches;
 
-class DataResponse {
+class MatchesDataResponse {
     private Matches data;
     private String message;
 

@@ -28,9 +28,17 @@ public class HttpService {
     public void setupRoutes() {
         Spark.get("/status", (req, res) -> "{\"status\": \"ok\"}");
         Spark.get("/api/match", this::getMatch);
+        Spark.get("/api/comments/:id", this::getComments);
+        Spark.post("/api/comments/:id", this::postComment);
 
         Spark.after("*", (req, res) -> {
             addResponseHeaders(res);
+        });
+
+        Spark.options("*", (req, res) -> {
+            res.header("Access-Control-Allow-Headers", "Content-Type");
+            res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+            return "";
         });
 
         Spark.exception(Exception.class, (ex, req, res) -> {
@@ -52,6 +60,19 @@ public class HttpService {
             }
         }
         return gson.toJson(new JsonDataResponse(query.execute()));
+    }
+
+    private String getComments(Request req, Response res) {
+        int userId = Integer.parseInt(req.params("id"));
+        return gson.toJson(new JsonDataResponse(db.getComments(userId)));
+    }
+
+    private String postComment(Request req, Response res) {
+        PostCommentJsonRequest jsonRequest = gson.fromJson(req.body(), PostCommentJsonRequest.class);
+        int userId = Integer.parseInt(req.params("id"));
+        String comment = jsonRequest.getMessage();
+        db.addComment(userId, comment);
+        return "";
     }
 
     private void addResponseHeaders(Response res) {

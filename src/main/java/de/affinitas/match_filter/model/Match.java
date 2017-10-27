@@ -2,6 +2,7 @@ package de.affinitas.match_filter.model;
 
 public class Match {
 
+    private int id;
     private String displayName;
     private int age;
     private String jobTitle;
@@ -12,6 +13,10 @@ public class Match {
     private int contactsExchanged;
     private boolean favourite;
     private String religion;
+
+    public int getId() {
+        return id;
+    }
 
     public String getDisplayName() {
         return displayName;

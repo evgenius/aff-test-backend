@@ -2,7 +2,6 @@ package de.affinitas.match_filter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
