@@ -26,7 +26,7 @@ public class Steps implements En {
 
     private HttpClient client = new HttpClient();
     private Request request;
-    private DataResponse dataResponse;
+    private MatchesDataResponse dataResponse;
     private Matches results;
 
     @Before
@@ -65,7 +65,7 @@ public class Steps implements En {
     @When("^I make a request$")
     public void iMakeARequest() throws Throwable {
         ContentResponse response = request.send();
-        dataResponse = gson.fromJson(response.getContentAsString(), DataResponse.class);
+        dataResponse = gson.fromJson(response.getContentAsString(), MatchesDataResponse.class);
         results = dataResponse.getData();
     }
 
